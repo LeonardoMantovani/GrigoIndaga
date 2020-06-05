@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     # Url per la homepage
-    # url(r'^$', views.homepage, name='homepage'),
+    url(r'^$', views.seleziona_classe, name='seleziona_classe'),
 ]

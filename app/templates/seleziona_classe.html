@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>GrigoIndaga - Seleziona Classe</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/seleziona_classe.css">
+</head>
+
+<body>
+    <div id="intestazione">
+        <!-- TODO: Aggiungere intestazione per la pagina -->
+    </div>
+
+    <div id="domanda">
+        <h3>Di che classe sei?</h3>
+
+        <div class="dropdown">
+            <input type="text" placeholder="Cerca Classe..." id="cercaClasse" onfocus="mostraDropdown()" onkeyup="filtraClassi()"/>
+            <div id="dropdownClassi" class="dropdown-content">
+                <a class="dropdown-item" onclick="scegliClasse(this)">1A sci</a>
+                <a class="dropdown-item" onclick="scegliClasse(this)">1A sca</a>
+                <a class="dropdown-item" onclick="scegliClasse(this)">1B sci</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    function mostraDropdown() {
+        document.getElementById("dropdownClassi").classList.toggle("show", true);
+    }
+
+    function nascondiDropdown() {
+        document.getElementById("dropdownClassi").classList.toggle("show", false);
+    }
+
+    /* spudoratamente copiato da https://www.w3schools.com/howto/howto_js_filter_dropdown.asp --> */
+    function filtraClassi() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("cercaClasse");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("dropdownClassi");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i<a.length; i++) {
+             txtValue = a[i].textContent || a[i].innerText;
+             if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                 a[i].style.display = "";
+             }
+             else {
+                 a[i].style.display = "none";
+             }
+        }
+    }
+
+    function scegliClasse(classe) {
+        document.getElementById("cercaClasse").value = classe.innerHTML;
+        nascondiDropdown();
+    }
+
+</script>
+
+</html>
