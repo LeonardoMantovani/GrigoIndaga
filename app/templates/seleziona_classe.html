@@ -17,9 +17,9 @@
         <div class="dropdown">
             <input type="text" placeholder="Cerca Classe..." id="cercaClasse" onfocus="mostraDropdown()" onkeyup="filtraClassi()"/>
             <div id="dropdownClassi" class="dropdown-content">
-                <a class="dropdown-item" onclick="scegliClasse(this)">1A sci</a>
-                <a class="dropdown-item" onclick="scegliClasse(this)">1A sca</a>
-                <a class="dropdown-item" onclick="scegliClasse(this)">1B sci</a>
+                {% for classe in classi %}
+                    <a class="dropdown-item" onclick="scegliClasse(this)">{{ classe }}</a>
+                {% endfor %}
             </div>
         </div>
     </div>
