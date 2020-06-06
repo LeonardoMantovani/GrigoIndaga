@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>GrigoIndaga{% block page_title %}{% endblock %}</title>
+    <!-- Importa Bootstrap (per rendere la pagina responsiva) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Collega file css -->
+    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="intestazione">
+                <!-- TODO: Aggiungere intestazione per la pagina -->
+                --INTESTAZIONEEEEEEEEE--
+                <br><br>
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

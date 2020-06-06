@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>GrigoIndaga - Vota ({{ classe.nome }})</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block page_title %}
+     - Vota ({{ classe.nome }})
+{% endblock %}
+
+{% block content %}
     Pagina per votare i prof della {{ classe.nome }}
-</body>
-</html>
+{% endblock %}
