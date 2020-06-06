@@ -5,5 +5,7 @@ from . import views
 
 urlpatterns = [
     # Url per la homepage
-    url(r'^$', views.seleziona_classe, name='seleziona_classe'),
+    path('', views.seleziona_classe, name='seleziona_classe'),
+    # Url per la pagina di votazione delle classi
+    path('vota/<pk>/', views.vota, name='vota'),
 ]

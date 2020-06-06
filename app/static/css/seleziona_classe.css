@@ -54,3 +54,7 @@
 
 /* Mostra il dropdown delle classi (usato nello script JS per mostrare il dropdown delle classi quando l'utente clicca il bottone) */
 .show {display:block;}
+
+#continuaBtn{
+    margin-top: 5%;
+}

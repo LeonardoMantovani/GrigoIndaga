@@ -2,62 +2,44 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+
+    <!-- Scegli titolo per la pagina -->
     <title>GrigoIndaga - Seleziona Classe</title>
+
+    <!-- Importa Bootstrap (per rendere la pagina responsiva) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Collega file css -->
     <link rel="stylesheet" type="text/css" href="../static/css/seleziona_classe.css">
 </head>
 
 <body>
-    <div id="intestazione">
-        <!-- TODO: Aggiungere intestazione per la pagina -->
-    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="intestazione">
+                <!-- TODO: Aggiungere intestazione per la pagina -->
+                --INTESTAZIONEEEEEEEEE--
+                <br><br>
+            </div>
+        </div>
 
-    <div id="domanda">
-        <h3>Di che classe sei?</h3>
+        <div class="row">
+            <div class="col-md-12" id="domanda">
+                <h3>Di che classe sei?</h3>
+            </div>
+        </div>
 
-        <div class="dropdown">
-            <input type="text" placeholder="Cerca Classe..." id="cercaClasse" onfocus="mostraDropdown()" onkeyup="filtraClassi()"/>
-            <div id="dropdownClassi" class="dropdown-content">
-                {% for classe in classi %}
-                    <a class="dropdown-item" onclick="scegliClasse(this)">{{ classe }}</a>
-                {% endfor %}
+        <div class="row">
+            <div class="col-md-6">
+                <form method="POST">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_p }}
+                    </table>
+                    <button type="submit">VAI A VOTARE</button>
+                </form>
             </div>
         </div>
     </div>
 </body>
-
-
-<script>
-    function mostraDropdown() {
-        document.getElementById("dropdownClassi").classList.toggle("show", true);
-    }
-
-    function nascondiDropdown() {
-        document.getElementById("dropdownClassi").classList.toggle("show", false);
-    }
-
-    /* spudoratamente copiato da https://www.w3schools.com/howto/howto_js_filter_dropdown.asp --> */
-    function filtraClassi() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("cercaClasse");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("dropdownClassi");
-        a = div.getElementsByTagName("a");
-        for (i = 0; i<a.length; i++) {
-             txtValue = a[i].textContent || a[i].innerText;
-             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                 a[i].style.display = "";
-             }
-             else {
-                 a[i].style.display = "none";
-             }
-        }
-    }
-
-    function scegliClasse(classe) {
-        document.getElementById("cercaClasse").value = classe.innerHTML;
-        nascondiDropdown();
-    }
-
-</script>
 
 </html>
