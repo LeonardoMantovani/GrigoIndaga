@@ -6,4 +6,13 @@
 
 {% block content %}
     Pagina per votare i prof della {{ classe.nome }}
+    <br><br>
+    <form method="POST">
+        {% csrf_token %}
+        {% for prof, form in forms_professori.items %}
+            <h3>{{ prof.nome }}</h3>
+            {{ form.as_p }}
+        {% endfor %}
+        <button type="submit">INVIA</button>
+    </form>
 {% endblock %}

@@ -15,9 +15,7 @@
         <div class="col-md-6">
             <form method="POST">
                 {% csrf_token %}
-                <table>
-                    {{ form.as_p }}
-                </table>
+                {{ form.as_p }}
                 <button type="submit">VAI A VOTARE</button>
             </form>
         </div>

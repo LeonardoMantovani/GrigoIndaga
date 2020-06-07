@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+     - Fine
+{% endblock %}
+
+{% block content %}
+    Grazie per aver votato. La tua votazione è andata a buon fine.
+    <br><br>
+    {% for prof in professori %}
+        <h3>{{ prof.nome }}</h3>
+        <p>Spiegazione: {{ prof.spiegazione }}</p>
+        <p>Preparazione: {{ prof.preparazione }}</p>
+        <p>Valutazioni: {{ prof.valutazioni }}</p>
+        <p>Metodo: {{ prof.metodo }}</p>
+        <p>Rapporto: {{ prof.rapporto }}</p>
+        <br>
+    {% endfor %}
+{% endblock %}
