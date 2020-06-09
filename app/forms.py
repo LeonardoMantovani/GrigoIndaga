@@ -1,7 +1,6 @@
 from django import forms
 from django.utils.safestring import mark_safe
 from .models import Classe, Votazione
-from django_starfield import Stars
 
 
 # Form per la scelta della classe

@@ -2,6 +2,7 @@
 __pycache__
 venv
 db.sqlite3
+app/static
 app/migrations
 .DS_Store
 .idea
