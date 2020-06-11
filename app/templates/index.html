@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - GrigoIndaga</title>
+    <meta name="description" content="Dai un voto ai tuoi prof!">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Features-Blue.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Team-Boxed.css' %}">
+</head>
+
+<body id="page-top">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container"><a class="navbar-brand text-uppercase js-scroll-trigger" href="#page-top" style="color: rgb(255,204,30);"><strong>GrigoIndaga</strong></a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler float-right" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#features">Come Funziona</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#parametri">PARAMETRI</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#download">VOTA</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead" style="background:url({% static 'img/bg-pattern.png' %}), linear-gradient(to left, #7b4397, #dc2430);height:100%;">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-7 my-auto">
+                    <div class="mx-auto header-content">
+                        <h1 class="mb-5">GrigoIndaga è la nuova piattaforma per gli studenti del Grigoletti che fornisce un quadro aggiornato sul rapporto tra studenti e docenti all'interno del liceo</h1><a class="btn btn-outline-warning btn-xl js-scroll-trigger" role="button"
+                            href="#download">VOTA I TUOI PROF!</a></div>
+                </div>
+                <div class="col-lg-5 d-lg-flex my-auto justify-content-lg-center align-items-lg-center"><i class="fa fa-pie-chart d-none d-print-flex d-sm-none d-md-none d-lg-flex d-xl-flex" style="color: rgb(255,204,30);font-size: 350px;"></i></div>
+            </div>
+        </div>
+    </header>
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h2>Come Funziona?</h2>
+                <p class="text-muted">Contribuisci anche tu alla nostra indagine, ecco cosa devi fare:</p>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="feature-item"><i class="icon-book-open text-primary"></i>
+                            <h3>Vota</h3>
+                            <p class="text-muted">Quantifica il tuo apprezzamento per i diversi aspetti dell'insegnamento di ogni tuo professore entro la data di chiusura delle urne.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-item"><i class="icon-share text-primary"></i>
+                            <h3>Condividi</h3>
+                            <p class="text-muted">Condividi questo sito con i tuoi amici così da avere il maggior numero di voti possibile. Più studenti voteranno più i risultati saranno accurati.</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="feature-item"><i class="icon-eye text-primary"></i>
+                            <h3>Osserva</h3>
+                            <p class="text-muted">Tieni d'occhio il sito dopo la chiusura delle urne in attesa della pubblicazione dei risultati</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="parametri" class="features-blue" style="background-color: rgb(169,53,103);">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Quali Sono i Parametri?</h2>
+                <p class="text-center">Approfondisci il significato dei nostri parametri per poter dare una valutazione corretta ai tuoi professori</p>
+            </div>
+            <div class="row d-lg-flex justify-content-lg-center features">
+                <div class="col-sm-6 col-md-4 item"><i class="fa fa-bullhorn icon"></i>
+                    <h3 class="name">Chiarezza nelle Spiegazioni</h3>
+                    <p class="description">Quanto è chiaro il prof. quando spiega? <br>Riesce a passarvi i concetti o durante le sue lezioni non si riesce a capire molto?<br></p>
+                </div>
+                <div class="col-sm-6 col-md-4 item"><i class="fa fa-mortar-board icon"></i>
+                    <h3 class="name">Preparazione</h3>
+                    <p class="description">Quanto vi appare preparato il professore sugli argomenti che spiega?<br></p>
+                </div>
+                <div class="col-sm-6 col-md-4 item"><i class="fa fa-check-square-o icon"></i>
+                    <h3 class="name">Adeguatezza nelle Valutazioni</h3>
+                    <p class="description">Le sue valutazioni nei compiti e nelle interrogazioni sono adeguate agli errori che commettete?<br></p>
+                </div>
+                <div class="col-sm-6 col-md-4 item"><i class="fa fa-pie-chart icon"></i>
+                    <h3 class="name">Metodo di Insegnamento</h3>
+                    <p class="description">Riesce a coinvolgervi durante la lezione?<br>Fa solo lezioni frontali o riesce a farvi esprimere la vostra opinione?<br></p>
+                </div>
+                <div class="col-sm-6 col-md-4 item"><i class="fa fa-group icon"></i>
+                    <h3 class="name">Rapporto con gli Studenti</h3>
+                    <p class="description">Tratta tutti gli studenti allo stesso modo?<br>È disponibile al dialogo nei momenti di difficoltà?<br></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section id="download" class="download text-center bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <h2 class="section-heading">Cosa aspetti?</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-dark btn-lg" type="submit">VAI A VOTARE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>©&nbsp;GrigoIndaga 2020. All Rights Reserved.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+
+</html>

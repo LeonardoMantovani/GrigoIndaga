@@ -1,58 +1,144 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - GrigoIndaga</title>
+    <meta name="description" content="Dai un voto ai tuoi prof!">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+    <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Features-Blue.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Team-Boxed.css' %}">
+</head>
 
-{% block page_title %}
-     - Vota ({{ classe.nome }})
-{% endblock %}
-
-{% block content %}
-    Pagina per votare i prof della {{ classe.nome }}
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background-color: #ffffff;">
+        <div class="container"><a class="navbar-brand text-uppercase js-scroll-trigger" href="{% url 'seleziona_classe' %}" style="color: rgb(255,204,30);"><strong>GrigoIndaga</strong></a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler float-right" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="{% url 'seleziona_classe' %}" style="color: rgba(0,0,0,0.7);">HOMEPAGE</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>..</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 style="font-size: 50px;margin-bottom: 24px;"><strong>Vota i professori della {{ classe.nome }}</strong></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            {% for prof, form in forms_professori.items %}
+                <h2 class="text-uppercase" style="font-size: 28px;color: rgb(164,55,93);"><strong>{{ prof.nome }}</strong></h2>
+                <table class="desktop-form">
+                    {{ form.as_table }}
+                </table>
+                <div class="mobile-form">
+                    {{ form }}
+                </div>
+                <br><br>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary" style="background-color: rgb(164,55,93);">INVIA</button>
+        </form>
+    </div>
     <br><br>
-    <form method="POST">
-        {% csrf_token %}
-        {% for prof, form in forms_professori.items %}
-            <h3>{{ prof.nome }}</h3>
-            <table>
-                {{ form.as_table }}
-            </table>
-        {% endfor %}
-        <button type="submit">INVIA</button>
-    </form>
+    <footer>
+        <div class="container">
+            <p>©&nbsp;GrigoIndaga 2020. All Rights Reserved.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
 
-    <!-- Style and Script usati per trasformare i RadioSelect dei form in stelle per la votazione -->
-    <style>
-        ul{
-            padding: 0;
-            margin: 0;
+<style>
+    /* Mostra o no il form come una tabella in base alla larghezza dello schermo */
+    .desktop-form{
+        display: table;
+    }
+    .mobile-form{
+        display: none;
+    }
+    @media only screen and (max-width: 750px){
+        .mobile-form{
+            display: block;
         }
-
-        ul li{
-            list-style-type: none;
-            display: inline-block;
-            margin: 10px;
-            color: lightgrey;
-            text-shadow: 2px 2px 7px gray;
-            font-size: 24px !important;
-        }
-
-        ul li:hover{
-            color: black;
-        }
-
-        ul li.active, ul li.secondary-active{
-            color: black;
-        }
-
-        input[type="radio"]{
+        .desktop-form{
             display: none;
         }
-    </style>
-    <script>
-        $('li').on('click', function () {
-            var nome = $(this).name;
-            $('li[name= nome]').removeClass('active').removeClass('secondary-active');
-            $(this).addClass('active');
-            $(this).prevAll().addClass('secondary-active');
-        })
-    </script>
-{% endblock %}
+    }
 
+
+    /* Imposta i margini delle label affinché i numeri siano vicini alla rispettiva domanda e non alla domanda successiva */
+    label{
+        margin-bottom: 0;
+        margin-top: 20px;
+    }
+    ul li label{
+        margin: 0;
+    }
+    th label{
+        margin: 0;
+    }
+
+
+    /* Trasforma i RadioSelect dei form in numeri per la votazione */
+    ul{
+        padding: 0;
+        margin: 0;
+    }
+    ul li{
+        list-style-type: none;
+        display: inline-block;
+        margin: 0 2px 0;
+        color: lightgrey;
+        text-shadow: 1px 1px 1px #414141;
+        font-size: 24px !important;
+    }
+
+    ul li:hover{
+        color: rgb(164,55,93);
+    }
+
+    .active, .secondary-active{
+        color: rgb(164,55,93);
+    }
+
+    input[type="radio"]{
+        display: none;
+    }
+</style>
+<script>
+    // modifica il colore del numero quando viene cliccato
+    $('li').on('click', function () {
+        var ulElement = $(this).closest('ul');
+        ulElement.children().removeClass('active').removeClass('secondary-active');
+        $(this).addClass('active');
+        $(this).prevAll().addClass('secondary-active');
+    })
+</script>
+
+</html>

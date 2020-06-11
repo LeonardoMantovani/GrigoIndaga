@@ -44,16 +44,26 @@ class FormVotaProfessore(forms.ModelForm):
 
         # Crea una lista per le "choices" dei widgets RadioSelect composta 10 stelle
         StelleDa1a10 = [
-            (1, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (2, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (3, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (4, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (5, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (6, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (7, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (8, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (9, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
-            (10, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>'))
+            # (1, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (2, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (3, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (4, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (5, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (6, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (7, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (8, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (9, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>')),
+            # (10, mark_safe('<i class="fa fa-star" aria-hidden="true"></i>'))
+            (1, '1'),
+            (2, '2'),
+            (3, '3'),
+            (4, '4'),
+            (5, '5'),
+            (6, '6'),
+            (7, '7'),
+            (8, '8'),
+            (9, '9'),
+            (10, '10')
         ]
 
         # Imposta il widget di ogni parametro come un RadioSelect di 10 stelle

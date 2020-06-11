@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from .models import Classe, Professore, Votazione
 from .forms import FormSceltaClasse, FormVotaProfessore
 
@@ -71,5 +70,5 @@ def seleziona_classe(request):
         form = FormSceltaClasse()
 
     # Carica la pagina "seleziona_classe" passando il form salvato nella variabile
-    return render(request, 'seleziona_classe.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
 
