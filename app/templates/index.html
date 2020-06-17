@@ -1,19 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - GrigoIndaga</title>
     <meta name="description" content="Dai un voto ai tuoi prof!">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
-    <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'fonts/simple-line-icons.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/Features-Blue.css' %}">
-    <link rel="stylesheet" href="{% static 'css/Team-Boxed.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/css/Features-Blue.css">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/css/Navigation-Clean.css">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/css/Team-Boxed.css">
 </head>
 
 <body id="page-top">
@@ -25,11 +27,16 @@
                     <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#features">Come Funziona</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#parametri">PARAMETRI</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#download">VOTA</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'logout' %}">LOG OUT</a></li>
+                    {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'social:begin' 'google-oauth2' %}">LOG IN</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-    <header class="masthead" style="background:url({% static 'img/bg-pattern.png' %}), linear-gradient(to left, #7b4397, #dc2430);height:100%;">
+    <header class="masthead" style="background:url('{% static 'app/img/bg-pattern.png' %}'), linear-gradient(to left, #7b4397, #dc2430);height:100%;">
         <div class="container h-100">
             <div class="row h-100">
                 <div class="col-lg-7 my-auto">
@@ -126,8 +133,10 @@
             </ul>
         </div>
     </footer>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/js/jquery.min.js"></script>
+    <script src="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/js/new-age.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Classe, Professore, Votazione
 from .forms import FormSceltaClasse, FormVotaProfessore
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 
 
 def fine(request):
@@ -10,46 +13,50 @@ def fine(request):
 
 # View per la pagina per la votazione dei prof
 def vota(request, pk):
-    # Salva la classe scelta in una variabile
-    classe = get_object_or_404(Classe, pk=pk)
-    # crea una lista con i nomi dei professori di quella classe
-    nomi_professori = classe.professori.split("-")
-    # Crea una lista con i modelli dei Professori della classe
-    professori = []
-    for prof in Professore.objects.all():
-        if nomi_professori.__contains__(prof.nome):
-            professori.append(prof)
+    # Se l'utente ha fatto il login...
+    if request.user.is_authenticated:
+        # Salva la classe scelta in una variabile
+        classe = get_object_or_404(Classe, pk=pk)
+        # crea una lista con i nomi dei professori di quella classe
+        nomi_professori = classe.professori.split("-")
+        # Crea una lista con i modelli dei Professori della classe
+        professori = []
+        for prof in Professore.objects.all():
+            if nomi_professori.__contains__(prof.nome):
+                professori.append(prof)
 
-    # Se è una richiesta di tipo POST significa che è stato premuto il pulsante "INVIA" del form
-    if request.method == 'POST':
-        # Salva le valutazioni inserite (se valide)
-        for prof in professori:
-            form = FormVotaProfessore(request.POST, prefix=prof.nome)
-            if form.is_valid():
-                form.save()
-                votazione = Votazione.objects.last()
-                votazione.salva_votazione(prof.nome)
-                votazione.delete()
+        # Se è una richiesta di tipo POST significa che è stato premuto il pulsante "INVIA" del form
+        if request.method == 'POST':
+            # Salva le valutazioni inserite (se valide)
+            for prof in professori:
+                form = FormVotaProfessore(request.POST, prefix=prof.nome)
+                if form.is_valid():
+                    form.save()
+                    votazione = Votazione.objects.last()
+                    votazione.salva_votazione(prof.nome)
+                    votazione.delete()
 
-        # Carica la pagina finale
-        return redirect('fine')
+            # Carica la pagina finale
+            return redirect('fine')
 
-    # Se la richiesta non è POST significa che si sta caricando la pagina per la prima volta
+        # Se la richiesta non è POST significa che si sta caricando la pagina per la prima volta
+        else:
+            # Crea un dizionario del tipo {prof: form_del_prof}
+            forms_professori = {}
+
+            # Per ogni prof della classe...
+            for prof in professori:
+                # # Crea una nuova Votazione con il nome del prof
+                # votazione = Votazione()
+                # votazione.nome_prof = prof.nome
+
+                # Crea un nuovo form per la votazione appena creata e aggiungilo al dizionario
+                form = FormVotaProfessore(prefix=prof.nome)
+                forms_professori[prof] = form
+
+        return render(request, 'vota.html', {'classe': classe, 'forms_professori': forms_professori})
     else:
-        # Crea un dizionario del tipo {prof: form_del_prof}
-        forms_professori = {}
-
-        # Per ogni prof della classe...
-        for prof in professori:
-            # # Crea una nuova Votazione con il nome del prof
-            # votazione = Votazione()
-            # votazione.nome_prof = prof.nome
-
-            # Crea un nuovo form per la votazione appena creata e aggiungilo al dizionario
-            form = FormVotaProfessore(prefix=prof.nome)
-            forms_professori[prof] = form
-
-    return render(request, 'vota.html', {'classe': classe, 'forms_professori': forms_professori})
+        return HttpResponse('<h2>Devi effettuare il login per poter votare</h2>')
 
 
 # View per la selezione della classe
@@ -72,3 +79,9 @@ def seleziona_classe(request):
     # Carica la pagina "seleziona_classe" passando il form salvato nella variabile
     return render(request, 'index.html', {'form': form})
 
+
+# View per il logout
+@login_required
+def logout(request):
+    auth_logout(request)
+    return redirect(seleziona_classe)

@@ -26,6 +26,7 @@ SECRET_KEY = 'p=_12-i-qv$v9+yb76tb$j^dcq4_=$m(h27*-6(*q=+uodm3*r'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'grigoindaga.eu.pythonanywhere.com',
 ]
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
     'import_export',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -123,4 +127,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
+
+
+# Authentication settings
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '339984798789-q0o66kgblbmci78ji36bfv6uogmp7a9o.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '2eY6rIoYN54G18VjfvgU-2Ai'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+LOGIN_URL = '/auth/login/google-oauth2'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
