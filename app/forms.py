@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.safestring import mark_safe
-from .models import Classe, Votazione
+from .models import Classe, Votazione, Materia
 
 
 # Form per la scelta della classe
@@ -64,3 +64,19 @@ class FormVotaProfessore(forms.ModelForm):
             'metodo': forms.RadioSelect(choices=StelleDa1a10),
             'rapporto': forms.RadioSelect(choices=StelleDa1a10),
         }
+
+
+# Form per filtrare la classifica (per materia insegnata)
+class FormFiltraClassifica(forms.Form):
+    # Salva i modelli Classe in una lista
+    materie = Materia.objects.all()
+    # Crea una lista vuota per il dropdown
+    lista_materie = []
+    # Per ogni modello Classe nella lista...
+    for materia in materie:
+        # Aggiungi alla lista per il dropdown la Primary Key della classe (per identificarla nel codice)
+        # e il suo nome (per renderla identificabile dall'utente)
+        lista_materie += [(materia.pk, materia.nome)]
+
+    # Crea un campo del form nome_classe per l'input dell'utente
+    pk_materia = forms.CharField(label='Materia', widget=forms.Select(choices=lista_materie))

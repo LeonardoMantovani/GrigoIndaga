@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>GrigoIndaga</title>
+    <meta name="description" content="Dai un voto ai tuoi prof!">
+
+    <!-- CSS di Bootstrap Studio (caricati su github) -->
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/css/Features-Blue.css">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/css/Navigation-Clean.css">
+    <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/css/Team-Boxed.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background-color: #ffffff;">
+        <div class="container"><a class="navbar-brand text-uppercase js-scroll-trigger" href="{% url 'seleziona_classe' %}" style="color: rgb(255,204,30);"><strong>GrigoIndaga</strong></a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler float-right" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'seleziona_classe' %}" style="color: rgba(0,0,0,0.7);">HOMEPAGE</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#titolo" style="color: black;">CLASSIFICA</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#grafici" style="color: black;">GRAFICI</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Titolo -->
+    <div class="container" id="titolo">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>..</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="font-size: 50px;margin-bottom: 24px;"><strong>Risultati delle votazioni</strong></h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" id="classifica">
+        <!-- Form per selezionare la materia di cui si vuole vedere la classifica -->
+        <div class="row">
+            <div class="col-md-3">
+                <form method="post" id="FormFiltraClassifica" style="margin-top: 5px;">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                </form>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-dark text-left" type="submit" form="FormFiltraClassifica">Applica</button>
+            </div>
+        </div>
+
+        <!-- Classifica -->
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive table-bordered" style="margin-top: 20px;">
+                    <table class="table table-bordered table-hover">
+                        <thead style="background-color: #a9356755;">
+                            <tr>
+                                <th><strong>Professore</strong></th>
+                                <th>S</th>
+                                <th>P</th>
+                                <th>M</th>
+                                <th>V</th>
+                                <th>R</th>
+                                <th><strong>TOTALE</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for prof in professori %}
+                                <tr>
+                                    <td><strong>{{prof.nome}}</strong></td>
+                                    <td class="text-right">{{prof.media_spiegazione}}</td>
+                                    <td class="text-right">{{prof.media_preparazione}}</td>
+                                    <td class="text-right">{{prof.media_metodo}}</td>
+                                    <td class="text-right">{{prof.media_valutazioni}}</td>
+                                    <td class="text-right">{{prof.media_rapporto}}</td>
+                                    <td class="text-right"><strong>{{ prof.punteggio_totale }}</strong></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p style="margin-top: 20px;">
+                    <strong>LEGENDA PUNTEGGI:</strong><br />
+                    <strong>S - </strong>Chiarezza nelle Spiegazioni<br />
+                    <strong>P - </strong>Preparazione<br />
+                    <strong>M - </strong>Efficacia del Metodo<br />
+                    <strong>V - </strong>Adeguatezza nelle valutazioni<br />
+                    <strong>R - </strong>Rapporto con gli studenti
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="container" id="grafici">
+        <div class="row">
+            <!-- Istogramma -->
+            <div class="col-md-6">
+                <div id="torta" style="border: 1px solid #000000"></div>
+            </div>
+            <!-- Grafico A Torta -->
+            <div class="col-md-6">
+                <div id="istogramma" style="border: 1px solid #000000"></div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <footer>
+        <div class="container">
+            <p>©&nbsp;GrigoIndaga 2020. All Rights Reserved.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- JS di Bootstrap Studio (caricati su github) -->
+    <script src="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/js/jquery.min.js"></script>
+    <script src="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/js/new-age.js"></script>
+</body>
+
+<!-- Script per i grafici-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    // Carica le API per i grafici di Google.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Imposta dei metodi da chiamare quando vengono caricate le API per i grafici di Google.
+    google.charts.setOnLoadCallback(disegnaTorta);
+    google.charts.setOnLoadCallback(disegnaIstogramma);
+
+    // Metodo per disegnare grafico a torta
+    function disegnaTorta() {
+        // Colleziona i dati in una tabella.
+        var dati = new google.visualization.DataTable();
+        dati.addColumn('string', 'Topping');
+        dati.addColumn('number', 'Slices');
+        dati.addRows([
+            ['Gradimento Basso (< 6)', {{ gradimento_basso }}],
+            ['Gradimento Medio (>= 6 && < 8.5)', {{ gradimento_medio }}],
+            ['Gradimento Alto (>= 8.5)', {{ gradimento_alto }}]
+        ]);
+
+        // Imposta le opzioni per il grafico
+        var opzioni = {
+            'title': 'Indice di gradimento dei professori',
+            'height': 400
+        };
+
+        // Disegna il grafico nell'apposito div della pagina
+        var grafico = new google.visualization.PieChart(document.getElementById('torta'));
+        grafico.draw(dati, opzioni);
+    }
+
+    // Metodo per disegnare istogramma
+    function disegnaIstogramma() {
+        var array = [['Materia', 'Punteggio Medio']];
+        {% for materia, media in medie_materie.items %}
+            var mediaFloat = parseFloat('{{ media }}');
+            array.push(['{{ materia }}', mediaFloat]);
+        {% endfor %}
+
+        // Colleziona i dati in una tabella
+        var dati = google.visualization.arrayToDataTable(array);
+
+        // Imposta le opzioni per il grafico
+        var opzioni = {
+            title: 'Punteggio Medio per Materia',
+            bars: 'vertical',
+            vAxis: {format: '0.0'},
+            height: 400,
+        };
+
+        var grafico = new google.visualization.ColumnChart(document.getElementById('istogramma'));
+        grafico.draw(dati, opzioni);
+    }
+</script>
+
+</html>

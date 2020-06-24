@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Classe, Professore, Votazione
-from .forms import FormSceltaClasse, FormVotaProfessore
+from .models import Classe, Professore, Votazione, Materia
+from .forms import FormSceltaClasse, FormVotaProfessore, FormFiltraClassifica
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
@@ -46,10 +46,6 @@ def vota(request, pk):
 
             # Per ogni prof della classe...
             for prof in professori:
-                # # Crea una nuova Votazione con il nome del prof
-                # votazione = Votazione()
-                # votazione.nome_prof = prof.nome
-
                 # Crea un nuovo form per la votazione appena creata e aggiungilo al dizionario
                 form = FormVotaProfessore(prefix=prof.nome)
                 forms_professori[prof] = form
@@ -78,6 +74,99 @@ def seleziona_classe(request):
 
     # Carica la pagina "seleziona_classe" passando il form salvato nella variabile
     return render(request, 'index.html', {'form': form})
+
+
+def ottieni_punteggio(professore):
+    return professore.punteggio_totale
+
+
+# View per vedere i risultati
+def risultati(request):
+    context = {}
+
+    # Se l'utente ha fatto il login...
+    if request.user.is_authenticated:
+        # Crea una lista per i professori da mostrare in classifica
+        professori = []
+
+        # Crea una variabile per il form
+        form = FormFiltraClassifica()
+
+        # Se è una richiesta di tipo POST significa che è stata scelta una "materia filtro" per la classifica
+        if request.method == 'POST':
+            # salva il form appena compilato in una variabile
+            form = FormFiltraClassifica(request.POST)
+            # se il form è valido...
+            if form.is_valid():
+                # ottieni la materia scelta
+                materia = Materia.objects.get(pk=form.cleaned_data['pk_materia'])
+
+                # salva i professori che insegnano questa materia nella lista
+                # (se la materia è 'Tutte le materie' riempi la lista con tutti i professori)
+                if materia.nome == 'Tutte le materie':
+                    for prof in Professore.objects.all():
+                        professori.append(prof)
+                else:
+                    for prof in Professore.objects.all():
+                        if prof.materia == materia.nome:
+                            professori.append(prof)
+
+        # Altrimenti riempi la lista con tutti i professori
+        else:
+            for prof in Professore.objects.all():
+                professori.append(prof)
+
+        # ordina la lista dei professori
+        professori.sort(key=ottieni_punteggio, reverse=True)
+
+        # Aggiungi la lista dei professori e il form tra le variabili da inviare al template
+        context['professori'] = professori
+        context['form'] = form
+
+        # Crea lista con il numero di prof divisi per gradimento (se alto, medio o basso) da usare nel grafico a torta
+        gradimento_basso = 0
+        gradimento_medio = 0
+        gradimento_alto = 0
+        for prof in Professore.objects.all():
+            if prof.punteggio_totale < 6:
+                gradimento_basso += 1
+            elif prof.punteggio_totale >= 6 and prof.punteggio_totale < 8.5:
+                gradimento_medio += 1
+            else:
+                gradimento_alto += 1
+
+        # Aggiungi le tre variabili appena riempite a quelle da inviare al template
+        context['gradimento_basso'] = gradimento_basso
+        context['gradimento_medio'] = gradimento_medio
+        context['gradimento_alto'] = gradimento_alto
+
+        # Crea il dizionario con le medie dei punteggi dei prof divisi per materia
+        medie_materie = {}
+        for materia in Materia.objects.all():
+            if not materia.nome == 'Tutte le materie':
+                # Salva i prof di questa materia in una lista
+                prof_materia = []
+                for prof in Professore.objects.all():
+                    if prof.materia == materia.nome and prof.n_voti > 0:
+                        prof_materia.append(prof)
+
+                # Calcola la media dei loro punteggi totali
+                media = 0
+                i = 0
+                for prof in prof_materia:
+                    media += prof.punteggio_totale
+                    i += 1
+                media /= i
+
+                # Aggiungi questa media al dizionario delle medie
+                medie_materie[materia.nome] = str(media)
+
+        # Aggiungi il dizionario appena creato alle variabili da inviare al template
+        context['medie_materie'] = medie_materie
+
+        return render(request, 'risultati.html', context)
+    else:
+        return HttpResponse('<h2>Devi effettuare il login per poter vedere i risultati</h2>')
 
 
 # View per il logout

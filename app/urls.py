@@ -10,6 +10,8 @@ urlpatterns = [
     path('vota/<pk>/', views.vota, name='vota'),
     # Url per la fine
     path('fine/', views.fine, name='fine'),
+    # Url per i risultati
+    path('risultati/', views.risultati, name='risultati'),
 
     # Urls per il sistema di autenticazione
     path('', include('social.apps.django_app.urls', namespace='social')),

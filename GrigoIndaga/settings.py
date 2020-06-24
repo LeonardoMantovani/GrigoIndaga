@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'import_export',
     'social.apps.django_app.default',
+    'social_django'
 ]
 
 MIDDLEWARE = [
