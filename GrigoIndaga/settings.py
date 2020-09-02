@@ -136,6 +136,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
 # Authentication settings
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend', #da rimuovere appena l'account con google sarà superuser
 )
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GRIGOINDAGA_Google_Auth_Key')
