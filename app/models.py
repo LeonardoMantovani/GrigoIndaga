@@ -1,6 +1,10 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
 
+# Evita di controllare views.py prima di eseguire le migrations (altrimenti queste non andrebbero a buon fine)
+from django.core.management.base import BaseCommand
+BaseCommand.requires_system_checks = False
+
 
 # Modello Classe
 class Classe(models.Model):
