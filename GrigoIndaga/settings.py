@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p=_12-i-qv$v9+yb76tb$j^dcq4_=$m(h27*-6(*q=+uodm3*r'
+SECRET_KEY = os.environ.get('GRIGOINDAGA_Secret_Key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'grigoindaga.eu.pythonanywhere.com',
+    'grigoindaga.herokuapp.com'
 ]
 
 
@@ -136,8 +137,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '339984798789-q0o66kgblbmci78ji36bfv6uogmp7a9o.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '2eY6rIoYN54G18VjfvgU-2Ai'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GRIGOINDAGA_Google_Auth_Key')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GRIGOINDAGA_Google_Auth_Secret')
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
