@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 # Evita di controllare views.py prima di eseguire le migrations (altrimenti queste non andrebbero a buon fine)
 from django.core.management.base import BaseCommand
@@ -107,7 +108,6 @@ class Professore(models.Model):
     # (RIMOSSO PERCHè PROVOCAVA UN ERRORE)
 
 
-
 class Votazione(models.Model):
     # Voti
     spiegazione = models.IntegerField()
@@ -120,3 +120,11 @@ class Votazione(models.Model):
     def salva_votazione(self, nome_prof):
         prof = get_object_or_404(Professore, nome=nome_prof)
         prof.aumenta_punteggi(self.spiegazione, self.preparazione, self.valutazioni, self.metodo, self.rapporto)
+
+
+class Studente(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    ha_votato = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username

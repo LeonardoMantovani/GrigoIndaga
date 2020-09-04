@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Classe, Professore, Votazione, Materia
+from .models import Classe, Professore, Votazione, Materia, Studente
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -35,3 +35,4 @@ admin.site.register(Classe, AdminClasse)
 admin.site.register(Professore, AdminProfessore)
 admin.site.register(Votazione)
 admin.site.register(Materia)
+admin.site.register(Studente)

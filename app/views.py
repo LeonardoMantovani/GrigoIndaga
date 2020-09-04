@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Classe, Professore, Votazione, Materia
+from .models import Classe, Professore, Votazione, Materia, Studente
 from .forms import FormSceltaClasse, FormVotaProfessore, FormFiltraClassifica
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
@@ -15,48 +15,72 @@ def fine(request):
 def vota(request, pk):
     # Se l'utente ha fatto il login...
     if request.user.is_authenticated:
-        # Salva la classe scelta in una variabile
-        classe = get_object_or_404(Classe, pk=pk)
-        # crea una lista con i nomi dei professori di quella classe
-        nomi_professori = classe.professori.split("-")
-        # Crea una lista con i modelli dei Professori della classe
-        professori = []
-        for prof in Professore.objects.all():
-            if nomi_professori.__contains__(prof.nome):
-                professori.append(prof)
-
-        # Se è una richiesta di tipo POST significa che è stato premuto il pulsante "INVIA" del form
-        if request.method == 'POST':
-            # Salva le valutazioni inserite (se valide)
-            for prof in professori:
-                form = FormVotaProfessore(request.POST, prefix=prof.nome)
-                if form.is_valid():
-                    form.save()
-                    votazione = Votazione.objects.last()
-                    votazione.salva_votazione(prof.nome)
-                    votazione.delete()
-
-            # Carica la pagina finale
-            return redirect('fine')
-
-        # Se la richiesta non è POST significa che si sta caricando la pagina per la prima volta
+        # Controlla che non abbia già votato e poi...
+        if request.user.studente.ha_votato:
+            return HttpResponse('<h2>Hai già votato questo mese</h2>')
         else:
-            # Crea un dizionario del tipo {prof: form_del_prof}
-            forms_professori = {}
+            # Salva la classe scelta in una variabile
+            classe = get_object_or_404(Classe, pk=pk)
+            # crea una lista con i nomi dei professori di quella classe
+            nomi_professori = classe.professori.split("-")
+            # Crea una lista con i modelli dei Professori della classe
+            professori = []
+            for prof in Professore.objects.all():
+                if nomi_professori.__contains__(prof.nome):
+                    professori.append(prof)
 
-            # Per ogni prof della classe...
-            for prof in professori:
-                # Crea un nuovo form per la votazione appena creata e aggiungilo al dizionario
-                form = FormVotaProfessore(prefix=prof.nome)
-                forms_professori[prof] = form
+            # Se è una richiesta di tipo POST significa che è stato premuto il pulsante "INVIA" del form
+            if request.method == 'POST':
+                # Salva le valutazioni inserite (se valide)
+                for prof in professori:
+                    form = FormVotaProfessore(request.POST, prefix=prof.nome)
+                    if form.is_valid():
+                        form.save()
+                        votazione = Votazione.objects.last()
+                        votazione.salva_votazione(prof.nome)
+                        votazione.delete()
 
-        return render(request, 'vota.html', {'classe': classe, 'forms_professori': forms_professori})
+                # Segna che l'utente ha votato
+                studente = get_object_or_404(Studente, user=request.user)
+                studente.ha_votato = True
+                studente.save()
+
+                # Carica la pagina finale
+                return redirect('fine')
+
+            # Se la richiesta non è POST significa che si sta caricando la pagina per la prima volta
+            else:
+                # Crea un dizionario del tipo {prof: form_del_prof}
+                forms_professori = {}
+
+                # Per ogni prof della classe...
+                for prof in professori:
+                    # Crea un nuovo form per la votazione appena creata e aggiungilo al dizionario
+                    form = FormVotaProfessore(prefix=prof.nome)
+                    forms_professori[prof] = form
+
+            return render(request, 'vota.html', {'classe': classe, 'forms_professori': forms_professori})
     else:
         return HttpResponse('<h2>Devi effettuare il login per poter votare</h2>')
 
 
 # View per la selezione della classe
 def seleziona_classe(request):
+    # Crea (se neccessario) un modello Studente corrispondente all'utente loggato
+    if request.user.is_authenticated:
+        # Crea una variabile per verificare l'esistenza dell'utente tra gli Studenti
+        esiste_studente = False
+
+        # Controlla se l'utente è presente tra gli studenti
+        for studente in Studente.objects.all():
+            if studente.user == request.user:
+                esiste_studente = True
+
+        # Se dopo il controllo non è stato trovato uno studente corrispondente all'utente creane uno nuovo
+        if esiste_studente == False:
+            nuovo_studente = Studente(user=request.user)
+            nuovo_studente.save()
+
     # Se è una richiesta di tipo POST significa che è stato premuto il pulsante "VAI A VOTARE" del form
     if request.method == 'POST':
         # Salva il form appena compilato in una variabile

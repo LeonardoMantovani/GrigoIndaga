@@ -26,7 +26,11 @@
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#features">Come Funziona</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#parametri">PARAMETRI</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#download">VOTA</a></li>
+                    {% if user.studente.ha_votato == False %}
+                        <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="#download">VOTA</a></li>
+                    {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'risultati' %}">RISULTATI</a></li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                         <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'logout' %}">LOG OUT</a></li>
                     {% else %}
@@ -41,8 +45,13 @@
             <div class="row h-100">
                 <div class="col-lg-7 my-auto">
                     <div class="mx-auto header-content">
-                        <h1 class="mb-5">GrigoIndaga è la nuova piattaforma per gli studenti del Grigoletti che fornisce un quadro aggiornato sul rapporto tra studenti e docenti all'interno del liceo</h1><a class="btn btn-outline-warning btn-xl js-scroll-trigger" role="button"
-                            href="#download">VOTA I TUOI PROF!</a></div>
+                        <h1 class="mb-5">GrigoIndaga è la nuova piattaforma per gli studenti del Grigoletti che fornisce un quadro aggiornato sul rapporto tra studenti e docenti all'interno del liceo</h1>
+                        {% if user.studente.ha_votato == False %}
+                            <a class="btn btn-outline-warning btn-xl js-scroll-trigger" role="button" href="#download">VOTA I TUOI PROF!</a>
+                        {% else %}
+                            <a class="btn btn-outline-warning btn-xl" role="button" href="{% url 'risultati' %}">VAI AI RISULTATI!</a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="col-lg-5 d-lg-flex my-auto justify-content-lg-center align-items-lg-center"><i class="fa fa-pie-chart d-none d-print-flex d-sm-none d-md-none d-lg-flex d-xl-flex" style="color: rgb(255,204,30);font-size: 350px;"></i></div>
             </div>
