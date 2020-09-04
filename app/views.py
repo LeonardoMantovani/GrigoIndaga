@@ -86,6 +86,12 @@ def risultati(request):
 
     # Se l'utente ha fatto il login...
     if request.user.is_authenticated:
+        # Crea una lista dei professori che sono stati votati
+        professori_votati = []
+        for prof in Professore.objects.all():
+            if prof.n_voti > 0:
+                professori_votati.append(prof)
+
         # Crea una lista per i professori da mostrare in classifica
         professori = []
 
@@ -104,16 +110,16 @@ def risultati(request):
                 # salva i professori che insegnano questa materia nella lista
                 # (se la materia è 'Tutte le materie' riempi la lista con tutti i professori)
                 if materia.nome == 'Tutte le materie':
-                    for prof in Professore.objects.all():
+                    for prof in professori_votati:
                         professori.append(prof)
                 else:
-                    for prof in Professore.objects.all():
+                    for prof in professori_votati:
                         if prof.materia == materia.nome:
                             professori.append(prof)
 
         # Altrimenti riempi la lista con tutti i professori
         else:
-            for prof in Professore.objects.all():
+            for prof in professori_votati:
                 professori.append(prof)
 
         # ordina la lista dei professori
@@ -127,7 +133,7 @@ def risultati(request):
         gradimento_basso = 0
         gradimento_medio = 0
         gradimento_alto = 0
-        for prof in Professore.objects.all():
+        for prof in professori_votati:
             if prof.punteggio_totale < 6:
                 gradimento_basso += 1
             elif prof.punteggio_totale >= 6 and prof.punteggio_totale < 8.5:
@@ -146,8 +152,8 @@ def risultati(request):
             if not materia.nome == 'Tutte le materie':
                 # Salva i prof di questa materia in una lista
                 prof_materia = []
-                for prof in Professore.objects.all():
-                    if prof.materia == materia.nome and prof.n_voti > 0:
+                for prof in professori_votati:
+                    if prof.materia == materia.nome:
                         prof_materia.append(prof)
 
                 # Calcola la media dei loro punteggi totali
