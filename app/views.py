@@ -186,7 +186,8 @@ def risultati(request):
                 for prof in prof_materia:
                     media += prof.punteggio_totale
                     i += 1
-                media /= i
+                if i != 0:
+                    media /= i
 
                 # Aggiungi questa media al dizionario delle medie
                 medie_materie[materia.nome] = str(media)
