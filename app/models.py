@@ -98,12 +98,13 @@ class Professore(models.Model):
         return self.nome
 
     # modifica il metodo per salvare il professore affinché aggiunga la sua materia se non è presente nel database
-    def save(self, *args, **kwargs):
-        if not Materia.objects.filter(nome=self.materia).exists():
-            nuova_materia = Materia(nome=self.materia)
-            nuova_materia.save()
-
-        super().save(self, *args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not Materia.objects.filter(nome=self.materia).exists():
+    #         nuova_materia = Materia(nome=self.materia)
+    #         nuova_materia.save()
+    #
+    #     super().save(self, *args, **kwargs)
+    # (RIMOSSO PERCHè PROVOCAVA UN ERRORE)
 
 
 
