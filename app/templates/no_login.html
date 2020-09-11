@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Vota - GrigoIndaga</title>
+    <title>Accesso Negato - GrigoIndaga</title>
     <meta name="description" content="Dai un voto ai tuoi prof!">
     <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -24,8 +24,8 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"></li>
-                    <li class="nav-item" role="presentation"></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="{% url 'seleziona_classe' %}" style="color: rgba(0,0,0,0.7);">HOMEPAGE</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'seleziona_classe' %}" style="color: rgba(0,0,0,0.7);">HOMEPAGE</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'social:begin' 'google-oauth2' %}" style="color: rgba(0,0,0,0.7);">LOGIN</a></li>
                 </ul>
             </div>
         </div>
@@ -39,28 +39,20 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 style="font-size: 50px;margin-bottom: 24px;"><strong>Vota i professori della {{ classe.nome }}</strong></h1>
+                    <h3 style="font-size: 28px;margin-bottom: 24px;"><strong>Per poter votare o accedere ai risultati devi <a href="{% url 'social:begin' 'google-oauth2' %}" style="color: #000000; font-style: italic;">effettuare il login</a>.</strong></h3>
+                    <p>
+                        <strong>MA SARÀ POSSIBILE RISALIRE AL MIO VOTO?</strong>
+                        <br>
+                        Assolutamente no, l'accesso con l'account istituzionale ci serve per verificare che tu sia effettivamente uno studente dell'istituto.
+                        <br>
+                        <!-- TODO: de-commentare la parte sul codice open source se i professori non si arrabbiano dopo l'uscita del sito
+                        E c'è di più, siamo convinti che per questo genere di indagini sia necessario l'anonimato e per questo abbiamo scelto di rendere pubblico <a href="https://github.com/LeonardoMantovani/GrigoIndaga">il codice sorgente che sta dietro la piattaforma.</a>
+                        -->
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <form method="POST">
-            {% csrf_token %}
-            {% for prof, form in forms_professori.items %}
-                <h2 class="text-uppercase" style="font-size: 28px;color: rgb(164,55,93);"><strong>{{ prof.nome }}</strong></h2>
-                <table class="desktop-form">
-                    {{ form.as_table }}
-                </table>
-                <div class="mobile-form">
-                    {{ form }}
-                </div>
-                <br><br>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary" style="background-color: rgb(164,55,93);">INVIA</button>
-        </form>
-    </div>
-    <br><br>
     <footer>
         <div class="container">
             <p>©&nbsp;GrigoIndaga 2020. All Rights Reserved.</p>
@@ -79,70 +71,13 @@
 </body>
 
 <style>
-    /* Mostra o no il form come una tabella in base alla larghezza dello schermo */
-    .desktop-form{
-        display: table;
-    }
-    .mobile-form{
-        display: none;
-    }
-    @media only screen and (max-width: 750px){
-        .mobile-form{
-            display: block;
-        }
-        .desktop-form{
-            display: none;
-        }
-    }
-
-
-    /* Imposta i margini delle label affinché i numeri siano vicini alla rispettiva domanda e non alla domanda successiva */
-    label{
-        margin-bottom: 0;
-        margin-top: 20px;
-    }
-    ul li label{
-        margin: 0;
-    }
-    th label{
-        margin: 0;
-    }
-
-
-    /* Trasforma i RadioSelect dei form in numeri per la votazione */
-    ul{
-        padding: 0;
-        margin: 0;
-    }
-    ul li{
-        list-style-type: none;
-        display: inline-block;
-        margin: 0 2px 0;
-        color: lightgrey;
-        text-shadow: 1px 1px 1px #414141;
-        font-size: 24px !important;
-    }
-
-    ul li:hover{
-        color: rgb(164,55,93);
-    }
-
-    .active, .secondary-active{
-        color: rgb(164,55,93);
-    }
-
-    input[type="radio"]{
-        display: none;
+    footer{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
     }
 </style>
-<script>
-    // modifica il colore del numero quando viene cliccato
-    $('li').on('click', function () {
-        var ulElement = $(this).closest('ul');
-        ulElement.children().removeClass('active').removeClass('secondary-active');
-        $(this).addClass('active');
-        $(this).prevAll().addClass('secondary-active');
-    })
-</script>
 
 </html>

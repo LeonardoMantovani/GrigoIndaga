@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - GrigoIndaga</title>
+    <title>Fine - GrigoIndaga</title>
     <meta name="description" content="Dai un voto ai tuoi prof!">
     <link rel="stylesheet" href="https://combinatronics.com/LeonardoMantovani/GrigoIndaga/master/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -24,8 +24,8 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"></li>
-                    <li class="nav-item" role="presentation"></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link js-scroll-trigger" href="{% url 'seleziona_classe' %}" style="color: rgba(0,0,0,0.7);">HOMEPAGE</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'risultati' %}" style="color: rgba(0,0,0,0.7);">RISULTATI</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'seleziona_classe' %}" style="color: rgba(0,0,0,0.7);">HOMEPAGE</a></li>
                 </ul>
             </div>
         </div>
@@ -42,14 +42,20 @@
                     <h1 style="font-size: 40px;margin-bottom: 24px;"><strong>Grazie per aver votato. La tua votazione è andata a buon fine.</strong></h1>
                 </div>
             </div>
-            <div class="row">
-                <button class="btn btn-primary" type="button" style="background-color: rgb(164,55,93);"><a href="{% url 'seleziona_classe' %}">TORNA ALLA HOMEPAGE</a></button>
+            <div class="row justify-content-center">
+                <div class="col-md-2">
+                    <button class="btn btn-primary" type="button" style="background-color: rgb(164,55,93);"><a href="{% url 'risultati' %}">VAI AI RISULTATI</a></button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary" type="button" style="background-color: rgb(164,55,93);"><a href="{% url 'seleziona_classe' %}">TORNA ALLA HOMEPAGE</a></button>
+                </div>
             </div>
         </div>
     </div>
     <footer>
         <div class="container">
             <p>©&nbsp;GrigoIndaga 2020. All Rights Reserved.</p>
+            <!-- <p>Developed by <a href="https://lezsoft.com">LezSoft</a></p> TODO: De-commentare l'autore se i professori non si arrabbiano dopo l'uscita del sito-->
             <!-- <ul class="list-inline">
                 <li class="list-inline-item"><a href="#">Privacy</a></li>
                 <li class="list-inline-item"><a href="#">Terms</a></li>

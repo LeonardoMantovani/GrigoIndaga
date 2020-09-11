@@ -61,7 +61,8 @@ def vota(request, pk):
 
             return render(request, 'vota.html', {'classe': classe, 'forms_professori': forms_professori})
     else:
-        return HttpResponse('<h2>Devi effettuare il login per poter votare</h2>')
+        # Altrimenti carica la pagina di Accesso Negato
+        return render(request, 'no_login.html', {})
 
 
 # View per la selezione della classe
@@ -197,7 +198,8 @@ def risultati(request):
 
         return render(request, 'risultati.html', context)
     else:
-        return HttpResponse('<h2>Devi effettuare il login per poter vedere i risultati</h2>')
+        # Altrimenti carica la pagina di Accesso Negato
+        return render(request, 'no_login.html', {})
 
 
 # View per il logout
